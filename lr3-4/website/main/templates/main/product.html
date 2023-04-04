@@ -1,0 +1,89 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title_page %}
+  <title>Магазин</title>
+{% endblock title_page %}
+{% block content %}
+  {% if user.is_authenticated %}
+
+
+<section class="main-section paddind" id="Portfolio">
+
+    <h2>Каталог</h2>
+    <h6>У нас большой асортимент товаров.</h6>
+    <div class="portfolioFilter">
+      <ul class="Portfolio-nav">
+        <li><a href="#" data-filter="*" class="current">Все</a></li>
+        <li><a href="#" data-filter=".phone">Смартфоны</a></li>
+        <li><a href="#" data-filter=".laptop">Ноутбуки</a></li>
+        <li><a href="#" data-filter=".pc">Компьютеры</a></li>
+        <li><a href="#" data-filter=".accesoires">Аксессуары</a></li>
+      </ul>
+    </div>
+
+  </div>
+  <div class="portfolioContainer">
+
+
+    {% for product in pr %}
+       {% if product.group == "phone" %}
+          <div class=" Portfolio-box phone" style="height:400px"> <!-- Смартфоны -->
+            <a href="{{ product.get_absolute_url }}">
+              <img src="{{ product.img.url }}">
+            </a>
+            <h3>{{ product.name }}</h3>
+              {% if product.availability %}
+                <p>Цена: {{ product.price }} byn</p>
+              {% else %}
+                <p>Нет в наличии</p>
+              {% endif %}
+          </div>
+       {% elif product.group == "pc" %}
+        <div class=" Portfolio-box pc" style="height:400px"> <!-- Компьютеры -->
+          <a href="{{ product.get_absolute_url }}">
+              <img src="{{ product.img.url }}">
+          </a>
+          <h3>{{ product.name }}</h3>
+            {% if product.availability %}
+                <p>Цена: {{ product.price }} byn</p>
+            {% else %}
+                <p>Нет в наличии</p>
+            {% endif %}
+
+        </div>
+       {% elif product.group == "laptop" %}
+          <div class="Portfolio-box laptop" style="height:400px"> <!-- Ноутбуки -->
+             <a href="{{ product.get_absolute_url }}">
+              <img src="{{ product.img.url }}">
+             </a>
+            <h3>{{ product.name }}</h3>
+              {% if post.availability %}
+                <p>Цена: {{ product.price }} byn</p>
+              {% else %}
+                <p>Нет в наличии</p>
+              {% endif %}
+
+          </div>
+       {% else %}
+          <div class=" Portfolio-box accesoires" style="height:400px"> <!-- Аксессуары -->
+            <a href="{{ product.get_absolute_url }}">
+              <img src="{{ product.img.url }}">
+            </a>
+            <h3>{{ product.name }}</h3>
+              {% if product.availability %}
+                <p>Цена: {{ product.price }} byn</p>
+              {% else %}
+                <p>Нет в наличии</p>
+              {% endif %}
+          </div>
+        {% endif %}
+    {% endfor %}
+
+  </div>
+</section>
+  {% else %}
+    <div style="position: absolute; right: 50%; transform: translateX(50%); margin-top: 30px;">
+      <h2 class="container" style="margin-top:200px">Для просмотра товаров необходимо авторизоваться</h2>
+    </div>
+  {% endif %}
+{% endblock content %}
